@@ -1,0 +1,56 @@
+Simple baysean bandit. A bandit problem involes a series of choices which
+produce rewards with various probabilities. The goal is to make choices in a 
+way that maximizes the total possible reward. An effective algorithm needs to 
+balance between trying choices that may be better than the current best choice
+(exploration) and trying the best choice found so far (exploitation). Baysean
+bandit algorithms keep a calculated distribution of likely rewards for each 
+choice, sample those distributions to find the best choice each round, and 
+update the distribution as results are obtained. They are one of the most 
+efficient algorithms, especially for the common case of the Bernoulli Bandit 
+(either a reward appears or it doesn't, with constant probablity per bandit.)
+This code saplies a set of bandits a given number of times and then plots 
+statistics of the results.
+
+Most code to learn bandit algorithms is done on simulated data, because 
+real data is hard to obtain in practice. This code follows that lead
+
+This code was run on Python 2.7. It requires the NumPy and matplotlib packages
+
+The design is based on the classic Thompson Sampling algorithm: 
+http://engineering.richrelevance.com/recommendations-thompson-sampling/
+It tracks the number of wins and losses per bandit. These are then used to 
+calculate a probability distribution of the likelyhood of each bandit paying
+off, which is then sampled. In this case, the distribution is the Beta Bernouli
+distribution. The bandit with the highest probability sample gets pulled each 
+round. These are tracked and plotted on a scatter plot at the end of the 
+sampling.
+
+The efficiency of the algorithm is tracked by a quantity called the total 
+regret: the average reward lost by picking a given bandit over the best bandit.
+This is also plotted over the trials to create the regret curve. Ideally, it
+will flatten out as sampling proceeds, the faster the better.
+
+In practice, both the bandit scatter plot and the regret curve show that the
+algoithm is very efficient at finding the best bandit when it has a clear
+advantage over others in terms of reward rate. When two or more are close
+together, the algorithm quickly selects those but can't choose between them.
+Since the difference small, total regret grows slowly in this case which is 
+still acceptable.
+
+  Copyright (C) 2016   Ezra Erb
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License version 3 as published
+  by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+  I'd appreciate a note if you find this program useful or make
+  updates. Please contact me through LinkedIn or github (my profile also has
+  a link to the code depository)
